@@ -21,6 +21,7 @@
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
   body{
     background: radial-gradient(1200px 600px at 15% -10%, #2A2170 0%, var(--bg) 55%), var(--bg);
     color: var(--text);
@@ -133,7 +134,7 @@
     <p class="lead">Netflix, Disney+, HBO Max, Spotify, ChatGPT Plus y más de 15 servicios. Precio fijo en dólares, convertido automáticamente a bolívares con la tasa del día.</p>
     <div class="tasa-box" id="tasaDisplay"><span class="tasa-dot"></span>Cargando tasa del día...</div>
     <div class="hero-ctas">
-      <a class="btn-primary" href="#selector">Elegir mi plan →</a>
+      <a class="btn-primary" href="#platformDuration">Elegir mi plan →</a>
     </div>
     <div class="hero-carousel" id="heroCarousel">
       <div class="hero-tag">🔥 Lo más visto esta semana</div>
@@ -156,7 +157,7 @@
       <p>Selecciona abajo — te mostramos el precio en dólares y en bolívares a la tasa del día, y te dejamos el mensaje listo para enviar por WhatsApp.</p>
     </div>
     <div class="selector-card">
-      <div class="selector-grid">
+      <div class="selector-grid" id="platformDuration">
         <div>
           <label>Plataforma</label>
           <select id="platformSelect"></select>
@@ -367,8 +368,9 @@ function updatePayDetails(){
 }
 paymentMethodSelect.addEventListener('change', updatePayDetails);
 
-// Botón "Proceder a pagar" → revela el botón "Ya pagué"
+// Botón "Proceder a pagar" → se oculta y solo queda visible "Ya pagué"
 procederBtn.addEventListener('click', () => {
+  procederBtn.style.display = 'none';
   yaPagueBtn.style.display = 'flex';
   yaPagueBtn.scrollIntoView({behavior:'smooth', block:'center'});
 });
@@ -439,6 +441,7 @@ function updatePrice(){
   const usd = item.prices_usd[dur];
   priceOutUsd.textContent = fmtUsd(usd);
   priceOutBs.textContent = `≈ ${fmtBs(usd)}`;
+  procederBtn.style.display = 'flex';
   yaPagueBtn.style.display = 'none';
 }
 platformSelect.addEventListener('change', updateDurations);
